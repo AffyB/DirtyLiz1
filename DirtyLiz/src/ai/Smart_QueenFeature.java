@@ -20,21 +20,26 @@ public class Smart_QueenFeature extends SmartArtificialIntelligence {
 		reckless = new PlayRecklesslyModule();
 	}
 
-	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt currentPlayer) {
+	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer) {
 		Card returnCard = null;
 		
-		returnCard = queenModule.getMove(playedCards, hand, currentPlayer);
+		returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
 		if(returnCard==null){
 			if(queenModule.playLow()){
-				returnCard = safe.getMove(playedCards, hand, currentPlayer);
+				returnCard = safe.getMove(playedCards, hand, leadPlayer);
 			}
 			else if(queenModule.playHigh()){
-				returnCard = reckless.getMove(playedCards, hand, currentPlayer);
+				returnCard = reckless.getMove(playedCards, hand, leadPlayer);
 			}
 		}
 		return returnCard;
 	}
-
+	
+	public String toString(){
+		String ai = "Smart_QueenFeatureAI";
+		return ai;	
+	}
+	
 	public boolean isSmart() {
 		return true;
 	}

@@ -18,8 +18,11 @@ public class QueenOfSpadesModule {
 		checkForAceOfSpades(hand);
 		checkForKingOfSpades(hand);
 		
-		
-		
+		if(playedCards[leadPlayer.getValue()] == null) {
+			playLow=true;
+			return returnCard;
+		}
+
 		if (playedCards[leadPlayer.getValue()].getSuit() == Card.SPADES){
 			if (isQueenPresent) {
 				if (isAcePresent) {
