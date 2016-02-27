@@ -9,10 +9,10 @@ public class QueenOfSpadesModule {
 	private boolean isQueenPresent;
 	private boolean isAcePresent;
 	private boolean isKingPresent;
-	private boolean playHigh;
 	private boolean playLow;
 	
 	public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer) {
+		playLow = false;
 		Card returnCard = null;
 		checkForQueen(hand);
 		checkForAceOfSpades(hand);
@@ -32,11 +32,8 @@ public class QueenOfSpadesModule {
 					int poss = whereIsKing(hand);
 					returnCard = hand.get(poss);
 				}
-			}else{
-				playHigh = true;
+				returnCard = returningSpade(hand);
 			}
-		}else{
-			playLow = true;
 		}
 		
 		return returnCard;
@@ -106,11 +103,24 @@ public class QueenOfSpadesModule {
 		return kingPosition;	
 	}
 	
-	public boolean playHigh(){
-		return playHigh;
+	public Card returningSpade(List<Card> hand){
+		Card returningCard = null;
+		int highestValue = 0;
+		Card tempCard = null;
+		int tempValue = 0;
+		 
+		if(playLow){
+			for(int i=0; i<hand.size(); i++){
+				tempCard = hand.get(i);
+				tempValue = tempCard.getValue();
+				if(tempValue > highestValue){
+					highestValue = tempValue;
+					returningCard = tempCard;
+				}
+			}
+		}
+		
+		return returningCard;
 	}
-	
-	public boolean playLow(){
-		return playLow;
-	}
+
 }

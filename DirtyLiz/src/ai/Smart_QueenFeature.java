@@ -24,14 +24,11 @@ public class Smart_QueenFeature extends SmartArtificialIntelligence {
 		Card returnCard = null;
 		
 		returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
+		
 		if(returnCard==null){
-			if(queenModule.playLow()){
-				returnCard = safe.getMove(playedCards, hand, leadPlayer);
-			}
-			else if(queenModule.playHigh()){
-				returnCard = reckless.getMove(playedCards, hand, leadPlayer);
-			}
+			returnCard = safe.getMove(playedCards, hand, leadPlayer);
 		}
+		
 		return returnCard;
 	}
 	
