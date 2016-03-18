@@ -5,7 +5,13 @@ import java.util.List;
 import commmon.Card;
 import commmon.MaxFourInt;
 
-public class PlaySafeModule {
+public class PlaySafeModule implements Module{
+
+	private CardTracker tracker;
+
+	public void addTracker(CardTracker tracker) {
+		this.tracker = tracker;		
+	}
 
 	public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer) {
 
@@ -36,7 +42,7 @@ public class PlaySafeModule {
 			return cardToPlay;
 		}
 
-		return cardToPlay = playHighestNonSuitFollowingCardIfNotLeadPlayer(hand);
+		return cardToPlay = playHighestValueCardIfNotLead(hand);
 
 	}
 
@@ -121,7 +127,7 @@ public class PlaySafeModule {
 		return lowestValueCard;
 	}
 
-	public Card playHighestNonSuitFollowingCardIfNotLeadPlayer(List<Card> hand) {
+	public Card playHighestValueCardIfNotLead(List<Card> hand) {
 		int highestValue = 0;
 		Card highestValueCard = null;
 
@@ -135,4 +141,5 @@ public class PlaySafeModule {
 		}
 		return highestValueCard;
 	}
+
 }

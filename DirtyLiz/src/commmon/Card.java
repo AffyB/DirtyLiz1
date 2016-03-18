@@ -75,20 +75,11 @@ public class Card {
   public static final Card JACK_DIAMONDS = new Card (11, DIAMONDS, 0, 5);
   public static final Card QUEEN_DIAMONDS = new Card (12, DIAMONDS, 0, 5);
   public static final Card KING_DIAMONDS = new Card (13, DIAMONDS, 0, 5);
-  
-  
-  //-------------
-  
 
   // ***********
   // * Methods *
   // ***********
 
-  /**
-   * Private constructor to prevent additions to the enumeration.
-   *
-   * ----
-   */
   private Card(int value, char suit, int points, int rating) {
     this.value = value;
     this.suit = suit;
@@ -98,31 +89,14 @@ public class Card {
     fullDeck.add(this);
   }
 
-
-  /**
-   * 
-   * @return int A value that can be passed to
-   *         
-   */
   public int getValue() {
     return value;
   }
 
-  /**
-   *
-   * @return int A value that can be passed to
-   *         
-   */
   public char getSuit() {
     return suit;
   }
 
-  /**
-   * Returns ---
-   *
-   * @return int A value that can be passed to
-   *         
-   */
   public int getPoints() {
     return points;
   }

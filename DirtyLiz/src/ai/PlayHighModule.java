@@ -4,7 +4,7 @@ import java.util.List;
 import commmon.Card;
 import commmon.MaxFourInt;
 
-public class PlayRecklesslyModule {
+public class PlayHighModule {
 
 public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer){
 		

@@ -8,10 +8,10 @@ import gamelogic.Player;
 public class PlayHighAI implements ArtificialIntelligence {
 	
 	Player connectedPlayer; 
-	private PlayRecklesslyModule reckless;
+	private PlayHighModule reckless;
 
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer){
-		reckless = new PlayRecklesslyModule();
+		reckless = new PlayHighModule();
 		return reckless.getMove(playedCards, hand, leadPlayer);
 	}
 	

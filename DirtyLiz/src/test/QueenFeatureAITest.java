@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ai.CardTracker;
-import ai.PlayRecklesslyModule;
+import ai.PlayHighModule;
 import ai.PlaySafeModule;
 import ai.Smart_QueenFeature;
 import commmon.Card;

@@ -24,7 +24,7 @@ public class PlaySafeModule_test {
 		ai = new PlaySafeModule();
 		cardsPlayed = new Card[3];
 		suit = Card.CLUBS;
-		leadPlayer = new
+		leadPlayer = new MaxFourInt(0);
 	}
 
 	@Test

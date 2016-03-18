@@ -4,35 +4,50 @@ import java.util.List;
 import commmon.Card;
 import commmon.MaxFourInt;
 
-public class QueenOfSpadesModule {
+public class QueenOfSpadesModule implements Module {
+
+	private CardTracker tracker;
 	
-	private boolean isQueenPresent;
-	private boolean isAcePresent;
-	private boolean isKingPresent;
-	private boolean playLow;
+	public void addTracker(CardTracker tracker) {
+		this.tracker = tracker;
+	}
 	
 	public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer) {
-		playLow = false;
 		Card returnCard = null;
-		checkForQueen(hand);
-		checkForAceOfSpades(hand);
-		checkForKingOfSpades(hand);
+
+		if(playedCards[leadPlayer.getValue()] == null) {
+			if(hand.contains(Card.QUEEN_SPADES)){
+				returnCard = getCardThatCanBeVoided(hand);
+				System.out.println("LEAD CARD RETURNED BY QUEEN MODULE HAVE QUEEN AND RETURN VOIDED CARD " + returnCard);
+				//return returnCard;
+			}
+		}
 		
 		if(playedCards[leadPlayer.getValue()] == null) {
-			playLow=true;
-			return returnCard;
+			if(returnCard==null){
+				if(hand.contains(Card.QUEEN_SPADES)){
+					returnCard = tracker.getNonLosableCard(hand);
+					System.out.println("LEAD CARD RETURNED BY QUEEN MODULE HAVE QUEEN AND RETURN NONELOSABLECARD " + returnCard);
+					//return returnCard;
+				}
+			}
+		}
+		
+		if(playedCards[leadPlayer.getValue()] == null) {
+			if(returnCard==null){
+				if(hand.contains(Card.QUEEN_SPADES)){
+					returnCard = getLowestCard(hand);
+					System.out.println("LEAD CARD RETURNED BY QUEEN MODULE HVE QUEEN AND RETURN LOWEST CARD " + returnCard);
+					//return returnCard;
+				}
+			}
 		}
 
-		if (playedCards[leadPlayer.getValue()].getSuit() == Card.SPADES){
-			if (isQueenPresent) {
-				if (isAcePresent) {
-					int pos = whereIsAce(hand);
-					returnCard = hand.get(pos);
-				} else if (isKingPresent) {
-					int poss = whereIsKing(hand);
-					returnCard = hand.get(poss);
+		if(playedCards[leadPlayer.getValue()] != null){
+			if (playedCards[leadPlayer.getValue()].getSuit() == Card.SPADES){
+				if (hand.contains(Card.QUEEN_SPADES)) {
+					returnCard = getHighestSpade(hand);
 				}
-				returnCard = returningSpade(hand);
 			}
 		}
 		
@@ -40,77 +55,21 @@ public class QueenOfSpadesModule {
 	}
 	
 	
-	public boolean checkForQueen(List<Card> hand){
-		isQueenPresent = false;
-		
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.QUEEN_SPADES){
-				isQueenPresent = true;
-			}
+	public Card checkForQueenAndReturn(List<Card> hand){
+		if (hand.contains(Card.QUEEN_SPADES)) {
+			return Card.QUEEN_SPADES;
 		}
-		return isQueenPresent;
+		return null;	
 	}
 	
-	public int whereIsQueen(List<Card> hand){
-		int queenPosition = 0;
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.QUEEN_SPADES){
-				queenPosition = i;
-			}
-		}
-		return queenPosition;	
-	}
-	
-	public boolean checkForAceOfSpades(List<Card> hand){
-		isAcePresent = false;
-		
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.ACE_SPADES){
-				isAcePresent = true;
-			}
-		}
-		return isAcePresent;
-	}
-	
-	public int whereIsAce(List<Card> hand){
-		int acePosition = 0;
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.ACE_SPADES){
-				acePosition = i;
-			}
-		}
-		return acePosition;	
-	}
-	
-	public boolean checkForKingOfSpades(List<Card> hand){
-		isKingPresent = false;
-		
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.KING_SPADES){
-				isKingPresent = true;
-			}
-		}
-		return isKingPresent;
-	}
-	
-	public int whereIsKing(List<Card> hand){
-		int kingPosition = 0;
-		for(int i=0; i<hand.size(); i++){
-			if(hand.get(i) == Card.KING_SPADES){
-				kingPosition = i;
-			}
-		}
-		return kingPosition;	
-	}
-	
-	public Card returningSpade(List<Card> hand){
+	public Card getHighestSpade(List<Card> hand){
 		Card returningCard = null;
 		int highestValue = 0;
 		Card tempCard = null;
 		int tempValue = 0;
 		 
-		if(playLow){
-			for(int i=0; i<hand.size(); i++){
+		for(int i=0; i<hand.size(); i++){
+			if(hand.get(i) != Card.QUEEN_SPADES && hand.get(i).getSuit() == Card.SPADES){
 				tempCard = hand.get(i);
 				tempValue = tempCard.getValue();
 				if(tempValue > highestValue){
@@ -120,7 +79,89 @@ public class QueenOfSpadesModule {
 			}
 		}
 		
+		if(returningCard == null){
+			returningCard = checkForQueenAndReturn(hand);
+		}
 		return returningCard;
+	}
+	
+//	public Card getNonHeartOrSpadeLeadCard(List<Card>hand){
+//		Card returnCard = null;
+//		
+//		for(int i=0; i<hand.size(); i++){
+//			if(hand.get(i).getSuit() != Card.SPADES){
+//				if(hand.get(i).getValue() <5){
+//					returnCard = hand.get(i);
+//				}
+//			}
+//		}
+//		
+//		return returnCard;
+//	}
+	
+	public boolean isThereEnoughCoverForQueen(List<Card> hand){
+		int numOfSpadeCards = tracker.numberOfTimesSpadesIsLead();
+		
+		for(int i=0; i<hand.size(); i++){
+			char suitPlayed = hand.get(i).getSuit();
+			if(suitPlayed == Card.SPADES){
+				numOfSpadeCards++;	
+			}
+		}
+		return numOfSpadeCards >= 3;
+	}
+	
+	private Card getCardThatCanBeVoided(List<Card> hand){
+		Card returnCard = null;
+		int numOfClubs = 0;
+		int numOfDiamonds = 0;
+		int numOfHearts = 0;
+		
+		for(int i=0; i<hand.size(); i++){
+			if(hand.get(i).getSuit() == Card.CLUBS){
+				numOfClubs++;
+			}else if(hand.get(i).getSuit() == Card.DIAMONDS){
+				numOfDiamonds++;
+			}else if(hand.get(i).getSuit() == Card.HEARTS){
+				numOfHearts++;
+			}
+		}
+		
+		if(numOfClubs==1){
+			for(int i=0; i<hand.size(); i++){
+				if(hand.get(i).getSuit() == Card.CLUBS){
+					returnCard = hand.get(i);
+				}
+			}
+		}else if(numOfDiamonds==1){
+			for(int i=0; i<hand.size(); i++){
+				if(hand.get(i).getSuit() == Card.DIAMONDS){
+					returnCard = hand.get(i);
+				}
+			}
+		}else if(numOfHearts==1){
+			for(int i=0; i<hand.size(); i++){
+				if(hand.get(i).getSuit() == Card.HEARTS){
+					returnCard = hand.get(i);
+				}
+			}
+		}
+		return returnCard;
+	}
+	
+	private Card getLowestCard(List<Card> hand){
+		int lowestValue = 15;
+		Card lowestValueCard = null;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card card = hand.get(i);
+			int value = card.getValue();
+			if (value < lowestValue) {
+				lowestValue = value;
+				lowestValueCard = card;
+			}
+		}
+		return lowestValueCard;
 	}
 
 }

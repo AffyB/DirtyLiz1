@@ -10,18 +10,17 @@ public class Smart_QueenFeature extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
 	private PlaySafeModule safe;
-	private PlayRecklesslyModule reckless;
 	private QueenOfSpadesModule queenModule;
 	
 	public Smart_QueenFeature(CardTracker cardTracker) {
 		super(cardTracker);
 		safe = new PlaySafeModule();
 		queenModule = new QueenOfSpadesModule();
-		reckless = new PlayRecklesslyModule();
 	}
 
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer) {
 		Card returnCard = null;
+		queenModule.addTracker(cardTracker);
 		
 		returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
 		

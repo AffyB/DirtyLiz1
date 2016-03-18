@@ -5,7 +5,7 @@ import java.util.List;
 import commmon.Card;
 import commmon.MaxFourInt;
 
-public class LostAllHopeModule {
+public class PlayRandomModule {
 public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer){
 		
 		Card cardToPlay = null;
@@ -45,27 +45,6 @@ public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer){
 		
 		return cardToBePlayed;
 		
-	}
-	
-	public Card checkForHeart(List<Card> hand){
-		ArrayList<Card> heartHand = new ArrayList<Card>(); 
-		Card heartToBePlayed = null;
-		char heart = 'H'; 
-
-		for(int i=0; i<hand.size(); i++){
-			Card card = hand.get(i);
-			if(card.getSuit() == heart){
-				heartHand.add(card);
-				}
-			}
-		
-		int length = heartHand.size();
-		double randomCard = Math.floor(Math.random() * length);
-		if(!heartHand.isEmpty()) {
-			heartToBePlayed = heartHand.get((int) randomCard);
-		}
-		
-		return heartToBePlayed;
 	}
 	
 	public Card playRandomCard(List<Card> hand){

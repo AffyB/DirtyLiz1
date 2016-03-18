@@ -10,13 +10,13 @@ public class Smart_ShootTheMoonFeature extends SmartArtificialIntelligence{
 	Player connectedPlayer; 
 	private PlaySafeModule safe;
 	private ShootingMoonModule shootTheMoon;
-	private PlayRecklesslyModule reckless;
+	private PlayHighModule reckless;
 	
 	public Smart_ShootTheMoonFeature(CardTracker cardTracker) {
 		super(cardTracker);
 		safe = new PlaySafeModule();
 		shootTheMoon = new ShootingMoonModule();
-		reckless = new PlayRecklesslyModule();
+		reckless = new PlayHighModule();
 	}
 	
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer){

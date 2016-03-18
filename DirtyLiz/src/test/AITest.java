@@ -8,7 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ai.ArtificialIntelligence;
+import ai.PlayHighAI;
+import ai.PlayLowAI;
+import ai.RandomAI;
 import commmon.Card;
+import commmon.MaxFourInt;
+import gamelogic.Player;
 
 public class AITest {
 	
@@ -16,10 +21,14 @@ public class AITest {
 	ArrayList<Card> cardsPlayedTracker;
 	private List<Card> hand;
 	private Card move;
+	MaxFourInt currentPlayer;
+	Player[] players;
 	
 	@Before
 	public void setUp() {
 		hand = new ArrayList<Card>();
+		currentPlayer = new MaxFourInt(0);
+		players = new Player[3];
 	}
 
 	@Test
@@ -40,7 +49,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 
 		assertEquals("Expected: " + Card.FIVE_HEARTS.toString() + " Actual: " + move.toString(), Card.FIVE_HEARTS, move);
 
@@ -63,7 +72,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.ACE_CLUBS.toString() + "Actual: " + move.toString(), Card.ACE_CLUBS, move);
 	
 	}
@@ -85,7 +94,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.NINE_DIAMONDS.toString() + "Actual: " + move.toString(), Card.NINE_DIAMONDS, move);
 		
 		}
@@ -107,7 +116,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.TWO_DIAMONDS.toString() + "Actual: " + move.toString(), Card.TWO_DIAMONDS, move);
 		
 	}
@@ -129,7 +138,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.TWO_HEARTS.toString() + "Actual: " + move.toString(), Card.TWO_HEARTS, move);
 		
 	}
@@ -151,7 +160,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.TWO_DIAMONDS.toString() + "Actual: " + move.toString(), Card.TWO_DIAMONDS, move);
 		
 	}
@@ -173,7 +182,7 @@ public class AITest {
 		cardsPlayedTracker.add(Card.ACE_SPADES);
 		cardsPlayedTracker.add(Card.KING_SPADES);
 		
-		move = ai.getMove(playedCards, hand);
+		move = ai.getMove(playedCards, hand, players, currentPlayer);
 		assertEquals("Expected: " + Card.DIAMONDS + "Actual: " + move.toString(), Card.DIAMONDS, move.getSuit());
 		
 	}

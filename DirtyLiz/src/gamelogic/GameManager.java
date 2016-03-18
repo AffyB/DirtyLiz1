@@ -1,20 +1,16 @@
 package gamelogic;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import ai.CardTracker;
 import ai.PlayHighAI;
 import ai.PlayLowAI;
 import ai.Smart_BaseOfAllAI;
+import ai.Smart_HeartFeature;
 import ai.Smart_QueenFeature;
 import ai.Smart_ShootTheMoonFeature;
+import ai.Smart_VoidFeature;
 import ai.RandomAI;
-import ai.SmartAI1;
-import ai.SmartAI2;
-import ai.SmartAI3;
 import commmon.Card;
 import commmon.Deck;
 import commmon.MaxFourInt;
@@ -50,7 +46,7 @@ public class GameManager {
 	}
 
 	private ArtificialIntelligence findAI(String s) {
-		String[] comboBoxArray = { "Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI"};
+		String[] comboBoxArray = { "Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Smart Void AI"};
 
 		if (s.equals(comboBoxArray[0])) {
 			return new PlayHighAI();
@@ -60,8 +56,12 @@ public class GameManager {
 			return new RandomAI();
 		} else if (s.equals(comboBoxArray[3])) {
 			return new Smart_BaseOfAllAI(trackCards);
+		} else if(s.equals(comboBoxArray[4])) {
+			return new Smart_QueenFeature(trackCards);
+		} else if(s.equals(comboBoxArray[5])){
+			return new Smart_HeartFeature(trackCards);
 		}
-		return new Smart_QueenFeature(trackCards);
+		return new Smart_VoidFeature(trackCards); 
 	}
 
 	public void start() {
@@ -137,15 +137,15 @@ public class GameManager {
 			playOnce();
 			playedCards = new Card[4];
 		}
-//		System.out.println("PLAYER 1 SCORE: " + players[0].getScoreForCurrentHand());
-//		System.out.println("PLAYER 2 SCORE: " + players[1].getScoreForCurrentHand());
-//		System.out.println("PLAYER 3 SCORE: " + players[2].getScoreForCurrentHand());
-//		System.out.println("PLAYER 4 SCORE: " + players[3].getScoreForCurrentHand());
-//		System.out.println("END OF ROUND");
-//		System.out.println("*************************************************");
-//		System.out.println("*************************************************");
-//		System.out.println("*************************************************");
-//		System.out.println("*************************************************");
+		System.out.println("PLAYER 1 SCORE: " + players[0].getScoreForCurrentHand());
+		System.out.println("PLAYER 2 SCORE: " + players[1].getScoreForCurrentHand());
+		System.out.println("PLAYER 3 SCORE: " + players[2].getScoreForCurrentHand());
+		System.out.println("PLAYER 4 SCORE: " + players[3].getScoreForCurrentHand());
+		System.out.println("END OF ROUND");
+		System.out.println("*************************************************");
+		System.out.println("*************************************************");
+		System.out.println("*************************************************");
+		System.out.println("*************************************************");
 
 		checkShootingTheMoon();
 		addPoints();
@@ -183,25 +183,25 @@ public class GameManager {
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
 				leadPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], true);
-		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
 				leadPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
 				leadPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
 				leadPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 
 		Card losingCard = playedCards[leadPlayer.getValue()];
 		int losingPlayer = leadPlayer.getValue();
@@ -219,10 +219,10 @@ public class GameManager {
 				}
 			}
 		}
-//		System.out.println("------------------------------------------");
-//		System.out.println("The losing player is " + losingPlayer + "and they played " + losingCard);
-//		System.out.println("------------------------------------------");
-//		System.out.println("------------------------------------------");
+		System.out.println("------------------------------------------");
+		System.out.println("The losing player is " + losingPlayer + "and they played " + losingCard);
+		System.out.println("------------------------------------------");
+		System.out.println("------------------------------------------");
 
 		int totalScore = calculateScores(playedCards);
 

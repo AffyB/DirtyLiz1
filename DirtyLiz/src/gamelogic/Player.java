@@ -52,9 +52,11 @@ public class Player {
 	}
 	
 	public Card promptMove(Card[] playedCards, Player[] players, MaxFourInt leadPlayer){
+		System.out.println("HAAAAND BEFRE " + hand);
 		Card toBePlayed = ai.getMove(playedCards, hand, players, leadPlayer); 
+		//System.out.println("Card Played: " + toBePlayed);
 		hand.remove(toBePlayed);
-		
+		//System.out.println("HAAANNND AFTERRRR " + hand);
 		return toBePlayed; 
 	}
 	

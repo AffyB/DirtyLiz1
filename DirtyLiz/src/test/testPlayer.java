@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ai.RandomAI;
 import commmon.Card;
+import commmon.MaxFourInt;
 import gamelogic.Player;
 
 public class testPlayer {
@@ -16,12 +17,16 @@ public class testPlayer {
 	//private Card move;
 	private Player player;
 	ArrayList<Card> cardsPlayedTracker;
+	MaxFourInt leadPlayer;
+	Player[] players;
 	
 	@Before
 	public void setUp() {
 		player = new Player(new RandomAI());
 		hand = new ArrayList<Card>();
 		cardsPlayedTracker = new ArrayList<Card>();
+		leadPlayer = new MaxFourInt(0);
+		players = new Player[3];
 	}
 
 	
@@ -64,7 +69,7 @@ public class testPlayer {
 		
 		Card[] playedCards = {Card.TEN_DIAMONDS};
 		player.giveCards(hand);
-		player.promptMove(playedCards);
+		player.promptMove(playedCards, players, leadPlayer);
 		assertFalse(hand.contains(Card.TWO_DIAMONDS));
 	}
 }

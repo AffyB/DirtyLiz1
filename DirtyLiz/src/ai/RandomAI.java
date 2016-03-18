@@ -8,10 +8,10 @@ import gamelogic.Player;
 public class RandomAI implements ArtificialIntelligence {
 	
 	Player connectedPlayer; 
-	private LostAllHopeModule lost;
+	private PlayRandomModule lost;
 
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer){
-		lost = new LostAllHopeModule();
+		lost = new PlayRandomModule();
 		return lost.getMove(playedCards, hand, leadPlayer);
 	}
 	

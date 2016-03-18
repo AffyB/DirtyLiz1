@@ -64,19 +64,20 @@ public class HeartsModule implements Module{
 	}
 	
 	public Card findHighestHeart(List<Card> hand){
-		int highestHeartValue = 0;
-		Card highestHeart = null;
-		
-		for(int i=0; i<hand.size(); i++){
-			Card temp = hand.get(i);
-			int tempVal = temp.getValue();
-			if(tempVal > highestHeartValue){
-				highestHeart = temp;
-				highestHeartValue = tempVal;
+		Card findHeart = null;
+		int highestValue = 0;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card card = hand.get(i);
+			if (card.getSuit() == Card.HEARTS) {
+				int value = card.getValue();
+				if (value > highestValue) {
+					highestValue = value;
+					findHeart = card;
+				}
 			}
 		}
-		
-		return highestHeart;
+		return findHeart;
 	}
 	
 	public Card findLowestHeart(List<Card> hand){
@@ -99,38 +100,54 @@ public class HeartsModule implements Module{
 	public boolean enoughHeartsCover(List<Card> hand){
 		boolean enoughHeartsCover = false;
 		int numOfLowHearts = 0;
-		int numeOfMidHearts = 0;
-		int numOfHighHearts = 0;
+		int numOfMidHearts = 0;
 		int numOfDangerHearts = 0;
 		
 		for(int i=0; i<hand.size(); i++){
 			if(hand.get(i).getValue() <= 5){
 				numOfLowHearts++;
 			}
-			else if(hand.get(i).getValue() > 5 && hand.get(i).getValue() <= 8){
-				numeOfMidHearts++;
+			else if(hand.get(i).getValue() > 5 && hand.get(i).getValue() <= 10){
+				numOfMidHearts++;
 			}
-			else if(hand.get(i).getValue() > 8 && hand.get(i).getValue() <= 11){
-				numOfHighHearts++;
-			}
-			else if(hand.get(i).getValue() > 11){
+			else if(hand.get(i).getValue() >= 11){
 				numOfDangerHearts++;
 			}
 		}
 		
-		if(tracker.numberOfTimesHeartsIsLead() <=1 ){
-			if(numOfLowHearts >= 2 || numeOfMidHearts >= 1){
+		// no danger hearts then dont need cover 
+		if(numOfDangerHearts == 0){
+			return true;
+		}
+
+		if(tracker.numberOfTimesHeartsIsLead() == 0 ){
+			if(numOfLowHearts >= 2 || numOfLowHearts >= 1 && numOfMidHearts >=1){
+				enoughHeartsCover = true;
+			}
+		} else if(tracker.numberOfTimesHeartsIsLead() == 1 ){
+			if(numOfLowHearts >= 1 || numOfMidHearts >=1){
+				enoughHeartsCover = true;
+			}
+		} else {
+			if(findBestHeartInHand(hand) == null){
+				enoughHeartsCover = true;
+			}else if(tracker.isTheBestHeartInHandBeatable(findBestHeartInHand(hand), hand)){
 				enoughHeartsCover = true;
 			}
 		}
-			
-		if(tracker.numberOfTimesHeartsIsLead() >=2 ){
-			if(numOfLowHearts >= 1 || numeOfMidHearts >= 1){
-				enoughHeartsCover = true;
-			}
-		}
-		
 		return enoughHeartsCover;
 	}
 
+	private Card findBestHeartInHand(List<Card> hand){
+		Card bestHeartInHand = null;
+		int points = 6;
+		
+		for(int i=0; i<hand.size(); i++){
+			if(hand.get(i).getSuit() == Card.HEARTS && hand.get(i).getPoints() < points){
+				points = hand.get(i).getPoints();
+				bestHeartInHand = hand.get(i);
+			}
+		}
+		return bestHeartInHand;
+	}
 }
