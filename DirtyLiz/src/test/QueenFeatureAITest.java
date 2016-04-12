@@ -11,7 +11,7 @@ import org.junit.Test;
 import ai.CardTracker;
 import ai.PlayHighModule;
 import ai.PlaySafeModule;
-import ai.Smart_QueenFeature;
+import ai.Smart_SpadeFeature;
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
@@ -22,13 +22,13 @@ public class QueenFeatureAITest {
 	private List<Card> hand;
 	char suit;
 	MaxFourInt leadPlayer;
-	private Smart_QueenFeature queen;
+	private Smart_SpadeFeature queen;
 	Player[] players;
 	
 	@Before
 	public void setUp() {
 		hand = new ArrayList<Card>();
-		queen = new Smart_QueenFeature(null);
+		queen = new Smart_SpadeFeature(null);
 		cardsPlayed = new Card[3];
 		players = new Player[3];
 		suit = Card.CLUBS;

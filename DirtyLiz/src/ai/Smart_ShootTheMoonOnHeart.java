@@ -9,20 +9,20 @@ import gamelogic.Player;
 public class Smart_ShootTheMoonOnHeart extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
-	private PlaySafeModuleImprove safeModule;
+	private PlaySafeModuleRefactored safeModule;
 	private SpadesModule queenModule;
 	private HeartsModule heartsModule;
 	private LeadModule leadModule;
-	private PlaySmartHighModule playSmartHigh;
+	private PlayLastModule playSmartHigh;
 	private ShootingMoonModule shootTheMoon; 
 	
 	public Smart_ShootTheMoonOnHeart(CardTracker cardTracker) {
 		super(cardTracker);
-		safeModule = new PlaySafeModuleImprove();
+		safeModule = new PlaySafeModuleRefactored();
 		queenModule = new SpadesModule();
 		heartsModule = new HeartsModule();
 		leadModule = new LeadModule();
-		playSmartHigh = new PlaySmartHighModule();
+		playSmartHigh = new PlayLastModule();
 		shootTheMoon = new ShootingMoonModule();
 		
 	}

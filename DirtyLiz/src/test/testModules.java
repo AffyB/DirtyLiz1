@@ -9,7 +9,7 @@ import org.junit.Test;
 import ai.CardTracker;
 import ai.HeartsModule;
 import ai.Smart_HeartFeature;
-import ai.Smart_QueenFeature;
+import ai.Smart_SpadeFeature;
 import commmon.Card;
 import commmon.Deck;
 import commmon.MaxFourInt;
@@ -39,7 +39,7 @@ public class testModules {
 		players = new Player[3];
 		leadPlayer = new MaxFourInt(0);
 		trackCards = CardTracker.getTracker();
-		player1 = new Player(new Smart_QueenFeature(trackCards));
+		player1 = new Player(new Smart_SpadeFeature(trackCards));
 		player2 = new Player(new Smart_HeartFeature(trackCards));
 		players[0] = player1;
 		players[1] = player2;

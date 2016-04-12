@@ -10,30 +10,30 @@ import gamelogic.Player;
 public class Smart_HeartFeature extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
-	private PlaySafeModuleImprove safeModule;
-	private SpadesModule queenModule;
+	private PlaySafeModuleRefactored safeModule;
+	private SpadesModule spadeModule;
 	private HeartsModule heartsModule;
 	private LeadModule leadModule;
-	private PlaySmartHighModule playSmartHigh;
+	private PlayLastModule playLastModule;
 	
 	public Smart_HeartFeature(CardTracker cardTracker) {
 		super(cardTracker);
-		safeModule = new PlaySafeModuleImprove();
-		queenModule = new SpadesModule();
+		safeModule = new PlaySafeModuleRefactored();
+		spadeModule = new SpadesModule();
 		heartsModule = new HeartsModule();
 		leadModule = new LeadModule();
-		playSmartHigh = new PlaySmartHighModule();
+		playLastModule = new PlayLastModule();
 		
 	}
 
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer) {
 		Card returnCard = null;
 		leadModule.addTracker(cardTracker);
-		queenModule.addTracker(cardTracker);
+		spadeModule.addTracker(cardTracker);
 		heartsModule.addTracker(cardTracker);
-		playSmartHigh.addTracker(cardTracker);
+		playLastModule.addTracker(cardTracker);
 		
-		returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
+		returnCard = spadeModule.getMove(playedCards, hand, leadPlayer);
 		
 		if(returnCard == null){
 			returnCard = leadModule.getMove(playedCards, hand, leadPlayer);
@@ -44,7 +44,7 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 		}
 		
 		if(returnCard == null){
-			returnCard = playSmartHigh.getMove(playedCards, hand, leadPlayer);
+			returnCard = playLastModule.getMove(playedCards, hand, leadPlayer);
 		}
 		
 		if(returnCard == null){
@@ -52,7 +52,7 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 		}
 
 		if(returnCard == null){
-			returnCard = queenModule.checkForQueenAndReturn(hand);
+			returnCard = spadeModule.checkForQueenAndReturn(hand);
 		}
 		
 		if(returnCard == null){

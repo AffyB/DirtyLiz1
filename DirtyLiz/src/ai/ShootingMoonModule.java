@@ -75,9 +75,11 @@ public class ShootingMoonModule implements Module {
 		for (int i = 0; i < hand.size(); i++) {
 			Card card = hand.get(i);
 			int value = card.getValue();
-			if (value < lowestValue) {
-				lowestValue = value;
-				lowestValueCard = card;
+			if(card.getSuit() != card.HEARTS){
+				if (value < lowestValue) {
+					lowestValue = value;
+					lowestValueCard = card;
+				}
 			}
 		}
 		return lowestValueCard;

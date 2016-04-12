@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ai.HeartsModule;
-import ai.Smart_QueenFeature;
+import ai.Smart_SpadeFeature;
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
