@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import ai.PlayHighAI;
 import ai.PlayLowAI;
-import ai.RandomAI;
+import ai.PlayRandomAI;
 import gamelogic.History;
 import gamelogic.Player;
 
@@ -18,10 +18,10 @@ public class testHistory {
 	
 	@Before
 	public void setUp() {
-		players[0] = new Player(new RandomAI());
+		players[0] = new Player(new PlayRandomAI());
 		players[1] = new Player(new PlayHighAI());
 		players[2] = new Player(new PlayLowAI());
-		players[3] = new Player(new RandomAI());
+		players[3] = new Player(new PlayRandomAI());
 		players[0].addToScore(10);
 		players[1].addToScore(20);
 		players[2].addToScore(30);

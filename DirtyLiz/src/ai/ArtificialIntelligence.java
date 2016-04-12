@@ -7,7 +7,7 @@ import gamelogic.Player;
 
 public interface ArtificialIntelligence {
 	
-	Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt currentPlayer);
+	Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer);
 	String toString();
 	boolean isSmart();
 	void connectPlayer(Player player); 

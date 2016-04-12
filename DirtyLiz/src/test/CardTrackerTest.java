@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import ai.CardTracker;
 import commmon.Card;
@@ -20,6 +21,7 @@ public class CardTrackerTest {
 	public void setUp() {
 		cardsPlayedTracker = new ArrayList<Card>();
 		tracking = CardTracker.getTracker();
+		tracking.newGame();
 		cardsPlayed = new Card[4];
 		hand = new ArrayList<Card>();
 	} 
@@ -97,21 +99,30 @@ public class CardTrackerTest {
 	}
 	
 	@Test
-	public void testReturnCard(){
+	public void testLeads() {
 		tracking.newGame();
-		
-		hand.add(Card.EIGHT_CLUBS);
-		hand.add(Card.FOUR_CLUBS);
-		hand.add(Card.TEN_SPADES);
-		hand.add(Card.EIGHT_DIAMONDS);
-		hand.add(Card.THREE_SPADES);
-		
-		cardsPlayed[0] = Card.FOUR_SPADES;
-		cardsPlayed[1] = Card.FOUR_DIAMONDS;
-		cardsPlayed[2] = Card.SIX_DIAMONDS;
-		cardsPlayed[3] = Card.SEVEN_DIAMONDS;
-		
-		asserEquals(, tracking.getNonLosableCard(hand));
+		tracking.addToCards(Card.ACE_CLUBS, true);
+		tracking.addToCards(Card.TWO_CLUBS, true);
+		assertEquals(2, tracking.numberOfTimesClubsIsLead());
+		tracking.newGame();
+		tracking.addToCards(Card.THREE_CLUBS, true);
+		tracking.addToCards(Card.THREE_CLUBS, false);
+		assertEquals(1, tracking.numberOfTimesClubsIsLead());
+		assertEquals(1, tracking.numberOfTimesSuitIsLead(Card.CLUBS));
 	}
+	
+	@Test
+	public void testAvailableCards() {
+		ArrayList<Card> clubs = tracking.findSuitableListForAvailableCards(Card.CLUBS);
+		assertEquals(13, clubs.size());
+		tracking.addToCards(Card.EIGHT_CLUBS, false);
+		tracking.addToCards(Card.TEN_CLUBS, false);
+		clubs = tracking.findSuitableListForAvailableCards(Card.CLUBS);
+		assertEquals(11, clubs.size());
+		tracking.newGame();
+		clubs = tracking.findSuitableListForAvailableCards(Card.CLUBS);
+		assertEquals(13, clubs.size());
+	}
+	
 
 }

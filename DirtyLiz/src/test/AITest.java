@@ -10,7 +10,7 @@ import org.junit.Test;
 import ai.ArtificialIntelligence;
 import ai.PlayHighAI;
 import ai.PlayLowAI;
-import ai.RandomAI;
+import ai.PlayRandomAI;
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
@@ -168,7 +168,7 @@ public class AITest {
 	@Test
 	public void testRandomAIFollowSuit(){
 	// test to return random card following suit
-		ai = new RandomAI();
+		ai = new PlayRandomAI();
 		
 		hand.add(Card.ACE_DIAMONDS);
 		hand.add(Card.TWO_DIAMONDS);

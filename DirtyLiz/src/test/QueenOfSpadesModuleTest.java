@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ai.QueenOfSpadesModule;
+import ai.SpadesModule;
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
@@ -19,13 +19,13 @@ public class QueenOfSpadesModuleTest {
 	private List<Card> hand;
 	char suit;
 	MaxFourInt leadPlayer;
-	private QueenOfSpadesModule queen;
+	private SpadesModule queen;
 	Player[] players;
 	
 	@Before
 	public void setUp() {
 		hand = new ArrayList<Card>();
-		queen = new QueenOfSpadesModule();
+		queen = new SpadesModule();
 		cardsPlayed = new Card[3];
 		players = new Player[3];
 		suit = Card.SPADES;

@@ -51,9 +51,9 @@ public class Player {
 		return scoreForCurrentHand;
 	}
 	
-	public Card promptMove(Card[] playedCards, Player[] players, MaxFourInt leadPlayer){
-		System.out.println("HAAAAND BEFRE " + hand);
-		Card toBePlayed = ai.getMove(playedCards, hand, players, leadPlayer); 
+	public Card promptMove(Card[] playedCards, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer){
+		//System.out.println("HAAAAND BEFRE " + hand);
+		Card toBePlayed = ai.getMove(playedCards, hand, players, leadPlayer, currentPlayer); 
 		//System.out.println("Card Played: " + toBePlayed);
 		hand.remove(toBePlayed);
 		//System.out.println("HAAANNND AFTERRRR " + hand);

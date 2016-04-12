@@ -10,7 +10,7 @@ public class PlayHighAI implements ArtificialIntelligence {
 	Player connectedPlayer; 
 	private PlayHighModule reckless;
 
-	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer){
+	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer){
 		reckless = new PlayHighModule();
 		return reckless.getMove(playedCards, hand, leadPlayer);
 	}

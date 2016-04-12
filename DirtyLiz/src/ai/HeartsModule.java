@@ -23,16 +23,51 @@ public class HeartsModule implements Module{
 		char suitLead = playedCards[leadPlayer.getValue()].getSuit();
 		
 		if(suitLead == Card.HEARTS){
-			returnCard = ifHeartsLead(hand, playedCards, leadPlayer);
-			if(returnCard == null){
-				returnCard = findLowestHeart(hand);
+			returnCard = playHighestHeartIfLost(hand, playedCards, leadPlayer);
+			//System.out.println("HEART MODULE PLAYHIGHESTHEARTIFLOST " + returnCard);
+		}
+		
+		if(returnCard == null){
+			if(suitLead == Card.HEARTS){
+				returnCard = getHighestSafeHeart(hand, playedCards, leadPlayer);
+				//System.out.println("HEART MODULE GETSAFESTHEART " + returnCard);
+				if(returnCard == null){
+					returnCard = findLowestHeart(hand);
+					//System.out.println("HEART MODULE FINDLOWESTHEART " + returnCard);
+				}
+			}
+		}		
+		return returnCard;
+	}
+
+	public Card playHighestHeartIfLost(List<Card> hand, Card[] playedCards, MaxFourInt leadPlayer){
+		Card returnCard = null;
+		int highestValue = 0;
+		int numOfPlayersPlayed = 0;
+	
+		for(int i=0; i<playedCards.length; i++){
+			if(playedCards[i] != null){
+				numOfPlayersPlayed++;
+			}
+		}	
+		
+		if(numOfPlayersPlayed == 3){
+			for (int i = 0; i < hand.size(); i++) {
+				Card card = hand.get(i);
+				if (card.getSuit() == Card.HEARTS && card != Card.KING_HEARTS && card != Card.ACE_HEARTS && card != Card.QUEEN_HEARTS) {
+					int value = card.getValue();
+					if (value > highestValue) {
+						highestValue = value;
+						returnCard = card;
+					}
+				}
 			}
 		}
 		
 		return returnCard;
 	}
 	
-	public Card ifHeartsLead(List<Card> hand, Card[] playedCards, MaxFourInt leadPlayer){
+	public Card getHighestSafeHeart(List<Card> hand, Card[] playedCards, MaxFourInt leadPlayer){
 		Card returnCard = null;
 		char suit =  Card.HEARTS;
 		
@@ -131,7 +166,7 @@ public class HeartsModule implements Module{
 		} else {
 			if(findBestHeartInHand(hand) == null){
 				enoughHeartsCover = true;
-			}else if(tracker.isTheBestHeartInHandBeatable(findBestHeartInHand(hand), hand)){
+			}else if(tracker.isHeartSafeToLead(findBestHeartInHand(hand), hand)){
 				enoughHeartsCover = true;
 			}
 		}

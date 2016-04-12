@@ -49,12 +49,12 @@ public class PlaySafeModule implements Module{
 	public Card checkForSameSuitToPlay(char suit, List<Card> hand, Card[] playedCards, MaxFourInt leadPlayer) {
 		Card returnCard = null;
 		int valueToBeat = playedCards[leadPlayer.getValue()].getValue();
-		for (int i = 0; i < playedCards.length; i++) {
-			//Check if anyone has played a higher card than the lead.
-			if (playedCards[i] != null && playedCards[i].getSuit() == suit && playedCards[i].getValue() > valueToBeat) {
-				valueToBeat = playedCards[i].getValue();
-			}
-		}
+//		for (int i = 0; i < playedCards.length; i++) {
+//			//Check if anyone has played a higher card than the lead.
+//			if (playedCards[i] != null && playedCards[i].getSuit() == suit && playedCards[i].getValue() > valueToBeat) {
+//				valueToBeat = playedCards[i].getValue();
+//			}
+//		}
 
 		for (int i = 0; i < hand.size(); i++) {
 			Card card = hand.get(i);

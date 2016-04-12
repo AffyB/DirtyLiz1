@@ -23,7 +23,7 @@ public class GUI {
 	private JTextField noGames;
 	//private mainController controller;
 	private GameManager newGame;
-	private String[] comboBoxArray = {"Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Smart Void AI"};
+	private String[] comboBoxArray = {"Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Shoot The Moon With Heart AI", "Play Shoot The Moon On Low AI"};
 	private JTextField csvFileName;
 
 	/**

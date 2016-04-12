@@ -10,15 +10,15 @@ public class Smart_QueenFeature extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
 	private PlaySafeModule safe;
-	private QueenOfSpadesModule queenModule;
+	private SpadesModule queenModule;
 	
 	public Smart_QueenFeature(CardTracker cardTracker) {
 		super(cardTracker);
 		safe = new PlaySafeModule();
-		queenModule = new QueenOfSpadesModule();
+		queenModule = new SpadesModule();
 	}
 
-	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer) {
+	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer) {
 		Card returnCard = null;
 		queenModule.addTracker(cardTracker);
 		
@@ -27,7 +27,7 @@ public class Smart_QueenFeature extends SmartArtificialIntelligence {
 		if(returnCard==null){
 			returnCard = safe.getMove(playedCards, hand, leadPlayer);
 		}
-		
+		//System.out.println("FROM QUEEN MODULE " + returnCard);
 		return returnCard;
 	}
 	

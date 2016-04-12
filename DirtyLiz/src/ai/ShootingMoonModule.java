@@ -1,35 +1,101 @@
 package ai;
+
 import java.util.List;
 
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
 
-public class ShootingMoonModule {
+public class ShootingMoonModule implements Module {
+
+	private CardTracker tracker;
+
+	public void addTracker(CardTracker tracker) {
+		this.tracker = tracker;
+	}
+
+	public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer, Player[] players, MaxFourInt currentPlayer) {
+		if(!shouldAttemptToShoot(hand, players, currentPlayer)) {
+			return null;
+		}
+		
+		Card cardToPlay = null;
+		if (playedCards[leadPlayer.getValue()] == null) {
+			return playHighestCard(hand);
+		}
+
+		char suitPlayed = playedCards[leadPlayer.getValue()].getSuit();
+
+		cardToPlay = checkForSameSuit(suitPlayed, hand);
+		if (cardToPlay != null) {
+			return cardToPlay;
+		}
+		
+		//cant follow suit so play low card
+		return playLowestCard(hand);
+
+	}
+
+	public Card playHighestCard(List<Card> hand) {
+		int highestValue = 0;
+		Card highestValueCard = null;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card card = hand.get(i);
+			int value = card.getValue();
+			if (value > highestValue) {
+				highestValue = value;
+				highestValueCard = card;
+			}
+		}
+		return highestValueCard;
+	}
+
+	public Card checkForSameSuit(char suit, List<Card> hand) {
+		int highestValue = 0;
+		Card highestValueCard = null;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card card = hand.get(i);
+			if (card.getSuit() == (suit)) {
+				int value = card.getValue();
+				if (value > highestValue) {
+					highestValue = value;
+					highestValueCard = card;
+				}
+			}
+		}
+		return highestValueCard;
+	}
+
+	public Card playLowestCard(List<Card> hand) {
+		int lowestValue = 15;
+		Card lowestValueCard = null;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card card = hand.get(i);
+			int value = card.getValue();
+			if (value < lowestValue) {
+				lowestValue = value;
+				lowestValueCard = card;
+			}
+		}
+		return lowestValueCard;
+	}
 	
-	public boolean shootingTheMoon(List<Card> hand, Player[] players, MaxFourInt leadPlayer){
-		if(isAllOtherPlayerScoresZero(players, leadPlayer)){
-			if(players[leadPlayer.getValue()].getScoreForCurrentHand()>20){
-				//if(totalRating(hand)>=15 || hand.size()<5){
+	private boolean shouldAttemptToShoot(List<Card> hand, Player[] players, MaxFourInt currentPlayer) {
+		if (isAllOtherPlayerScoresZero(players, currentPlayer)) {
+			if (players[currentPlayer.getValue()].getScoreForCurrentHand() > 20) {
 				return true;
-				//}
 			}
 		}
 		return false;
 	}
-	
-	public int totalRating(List<Card> hand){
-		int ratingOfHand = 0;
-		for(int i=0; i<hand.size(); i++){
-			ratingOfHand = ratingOfHand + hand.get(i).getValue();
-		}
-		return ratingOfHand;
-	}
-	
-	public boolean isAllOtherPlayerScoresZero(Player[] players, MaxFourInt leadPlayer){
-		for(int i=0; i<players.length; i++){
-			if(!players[i].equals(leadPlayer.getValue())){
-				if(players[i].getScoreForCurrentHand()>0){
+
+	private boolean isAllOtherPlayerScoresZero(Player[] players, MaxFourInt currentPlayer) {
+		for (int i = 0; i < players.length; i++) {
+			if (!players[i].equals(currentPlayer.getValue())) {
+				if (players[i].getScoreForCurrentHand() > 0) {
 					return false;
 				}
 			}

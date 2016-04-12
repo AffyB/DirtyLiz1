@@ -10,29 +10,29 @@ import commmon.Card;
 
 public class CardTracker {
 
-	private ArrayList<Card> trackedCards = new ArrayList<Card>();
+	private ArrayList<Card> trackedCards;
 	private static CardTracker THE_CARD_TRACKER;
 	private Map<Character, Integer> leadSuits;
-	private ArrayList<Card> heartsPlayed = new ArrayList<Card>();
-	private ArrayList<Card> spadesPlayed = new ArrayList<Card>();
-	private ArrayList<Card> clubsPlayed = new ArrayList<Card>();
-	private ArrayList<Card> diamondsPlayed = new ArrayList<Card>();
-	private ArrayList<Card> heartsAvailable = new ArrayList<Card>();
-	private ArrayList<Card> spadesAvailable = new ArrayList<Card>();
-	private ArrayList<Card> clubsAvailable = new ArrayList<Card>();
-	private ArrayList<Card> diamondsAvailable = new ArrayList<Card>();
-	private static final Card[] ALL_HEARTS = new Card[] { Card.ACE_HEARTS, Card.TWO_HEARTS, Card.THREE_HEARTS,
+	private ArrayList<Card> heartsPlayed;
+	private ArrayList<Card> spadesPlayed;
+	private ArrayList<Card> clubsPlayed;
+	private ArrayList<Card> diamondsPlayed;
+	private ArrayList<Card> heartsAvailable;
+	private ArrayList<Card> spadesAvailable;
+	private ArrayList<Card> clubsAvailable;
+	private ArrayList<Card> diamondsAvailable;
+	public static final Card[] ALL_HEARTS = new Card[] { Card.ACE_HEARTS, Card.TWO_HEARTS, Card.THREE_HEARTS,
 			Card.FOUR_HEARTS, Card.FIVE_HEARTS, Card.SIX_HEARTS, Card.SEVEN_HEARTS, Card.EIGHT_HEARTS, Card.NINE_HEARTS,
-			Card.TEN_HEARTS, Card.JACK_HEARTS, Card.QUEEN_HEARTS, Card.KING_HEARTS};
-	private static final Card[] ALL_SPADES = new Card[] { Card.ACE_SPADES, Card.TWO_SPADES, Card.THREE_SPADES,
+			Card.TEN_HEARTS, Card.JACK_HEARTS, Card.QUEEN_HEARTS, Card.KING_HEARTS };
+	public static final Card[] ALL_SPADES = new Card[] { Card.ACE_SPADES, Card.TWO_SPADES, Card.THREE_SPADES,
 			Card.FOUR_SPADES, Card.FIVE_SPADES, Card.SIX_SPADES, Card.SEVEN_SPADES, Card.EIGHT_SPADES, Card.NINE_SPADES,
-			Card.TEN_SPADES, Card.JACK_SPADES, Card.QUEEN_SPADES, Card.KING_SPADES};
-	private static final Card[] ALL_CLUBS = new Card[] { Card.ACE_CLUBS, Card.TWO_CLUBS, Card.THREE_CLUBS,
+			Card.TEN_SPADES, Card.JACK_SPADES, Card.QUEEN_SPADES, Card.KING_SPADES };
+	public static final Card[] ALL_CLUBS = new Card[] { Card.ACE_CLUBS, Card.TWO_CLUBS, Card.THREE_CLUBS,
 			Card.FOUR_CLUBS, Card.FIVE_CLUBS, Card.SIX_CLUBS, Card.SEVEN_CLUBS, Card.EIGHT_CLUBS, Card.NINE_CLUBS,
-			Card.TEN_CLUBS, Card.JACK_CLUBS, Card.QUEEN_CLUBS, Card.KING_CLUBS};
-	private static final Card[] ALL_DIAMONDS = new Card[] { Card.ACE_DIAMONDS, Card.TWO_DIAMONDS, Card.THREE_DIAMONDS,
-			Card.FOUR_DIAMONDS, Card.FIVE_DIAMONDS, Card.SIX_DIAMONDS, Card.SEVEN_DIAMONDS, Card.EIGHT_DIAMONDS, Card.NINE_DIAMONDS,
-			Card.TEN_DIAMONDS, Card.JACK_DIAMONDS, Card.QUEEN_DIAMONDS, Card.KING_DIAMONDS};
+			Card.TEN_CLUBS, Card.JACK_CLUBS, Card.QUEEN_CLUBS, Card.KING_CLUBS };
+	public static final Card[] ALL_DIAMONDS = new Card[] { Card.ACE_DIAMONDS, Card.TWO_DIAMONDS, Card.THREE_DIAMONDS,
+			Card.FOUR_DIAMONDS, Card.FIVE_DIAMONDS, Card.SIX_DIAMONDS, Card.SEVEN_DIAMONDS, Card.EIGHT_DIAMONDS,
+			Card.NINE_DIAMONDS, Card.TEN_DIAMONDS, Card.JACK_DIAMONDS, Card.QUEEN_DIAMONDS, Card.KING_DIAMONDS };
 
 	private CardTracker() {
 		THE_CARD_TRACKER = this;
@@ -41,6 +41,20 @@ public class CardTracker {
 		leadSuits.put(Card.SPADES, 0);
 		leadSuits.put(Card.HEARTS, 0);
 		leadSuits.put(Card.DIAMONDS, 0);
+		trackedCards = new ArrayList<Card>();
+		spadesPlayed = new ArrayList<Card>();
+		diamondsPlayed = new ArrayList<Card>();
+		heartsPlayed = new ArrayList<Card>();
+		clubsPlayed = new ArrayList<Card>();
+		heartsAvailable = new ArrayList<Card>();
+		spadesAvailable = new ArrayList<Card>();
+		clubsAvailable = new ArrayList<Card>();
+		diamondsAvailable = new ArrayList<Card>();
+		clubsAvailable.addAll(Arrays.asList(ALL_CLUBS));
+		spadesAvailable.addAll(Arrays.asList(ALL_SPADES));
+		heartsAvailable.addAll(Arrays.asList(ALL_HEARTS));
+		diamondsAvailable.addAll(Arrays.asList(ALL_DIAMONDS));
+		
 	}
 
 	public static CardTracker getTracker() {
@@ -60,78 +74,69 @@ public class CardTracker {
 			int amountLead = leadSuits.get(cardPlayed.getSuit());
 			leadSuits.put(cardPlayed.getSuit(), amountLead + 1);
 		}
-		removeCardFromAvailableCard(cardPlayed);
+		removeCardFromAvailableCards(cardPlayed);
 		findSuitableList(cardPlayed.getSuit()).add(cardPlayed);
 	}
-	
-	public void removeCardFromAvailableCard(Card cardPlayed){
+
+	public void removeCardFromAvailableCards(Card cardPlayed) {
 		char suit = cardPlayed.getSuit();
-		findSuitableListForAvailableCards(suit).remove(cardPlayed);		
+		findSuitableListForAvailableCards(suit).remove(cardPlayed);
 	}
-	
-	public Card getNonLosableCard(List<Card> hand) {
-		if(hand.size() > 7) {
-			return getNonLosableCardForBigHand(hand);
+
+	public Card getHighestNonLosableCard(List<Card> hand, boolean isQueenPresentInHand) {
+		int highestValueSoFar = 0;
+		Card returnCard = null;
+
+		for (int i = 0; i < hand.size(); i++) {
+			Card currentCard = hand.get(i);
+			if (isThereTwoOrFewerLowerCards(currentCard, hand) && currentCard.getValue() > highestValueSoFar) {
+				if (isQueenPresentInHand) {
+					if (currentCard.getSuit() != Card.SPADES) {
+						returnCard = currentCard;
+					}
+				} else {
+					returnCard = currentCard;
+				}
+			}
+		}
+		return returnCard;
+	}
+
+	private boolean isThereTwoOrFewerLowerCards(Card cardToCheck, List<Card> hand) {
+		ArrayList<Card> suitableList = findSuitableListForAvailableCards(cardToCheck.getSuit());
+		ArrayList<Card> checkingList = new ArrayList<Card>();
+		int howManyTimesMyCardIsBeaten = 0;
+
+		for (int i = 0; i < suitableList.size(); i++) {
+			Card card = suitableList.get(i);
+			if (!hand.contains(card)) {
+				checkingList.add(card);
+			}
+		}
+
+		if (checkingList.size() == 0) {
+			return false;
+		}
+
+		for (int i = 0; i < checkingList.size(); i++) {
+			if (checkingList.get(i).getValue() < cardToCheck.getValue()) {
+				howManyTimesMyCardIsBeaten++;
+			}
+		}
+
+		if (checkingList.size() > 2) {
+			return howManyTimesMyCardIsBeaten <= 2;
+		} else if (checkingList.size() == 2) {
+			return howManyTimesMyCardIsBeaten <= 1;
+		} else if (checkingList.size() == 1) {
+			return howManyTimesMyCardIsBeaten < 1;
 		} else {
-			return getNonLosableCardForSmallHand(hand);
+			return false;
 		}
 	}
 
-	private Card getNonLosableCardForBigHand(List<Card> hand) {
-		int highestValueSoFar = 0;
-		Card returnCard = null;
-		
-		for (int i = 0; i < hand.size(); i++) {
-			Card currentCard = hand.get(i);
-			if(isThereTwoOrFewerLowerCards(currentCard, hand) && currentCard.getValue() > highestValueSoFar){
-				returnCard = currentCard;			
-			}			
-		}
-		return returnCard;
-	}
-	
-	private Card getNonLosableCardForSmallHand(List<Card> hand) {
-		int lowestValueSoFar = 0;
-		Card returnCard = null;
-		
-		for (int i = 0; i < hand.size(); i++) {
-			Card currentCard = hand.get(i);
-			if(isThere2OrHigherLowerCards(currentCard, hand) && currentCard.getValue() < lowestValueSoFar){
-				returnCard = currentCard;			
-			}			
-		}
-		return returnCard;
-	}
-	
-	private boolean isThereTwoOrFewerLowerCards(Card currentCard, List<Card> hand){
-		ArrayList<Card> checkingList = findSuitableListForAvailableCards(currentCard.getSuit());
-		int lowerValues = 0;
-		
-		for(int i=0; i<checkingList.size(); i++){
-			if(!hand.contains(checkingList.get(i))){
-				if(checkingList.get(i).getValue() < currentCard.getValue()){
-					lowerValues++;
-				}
-			}
-		}
-		return lowerValues <= 2;
-	}
-	
-	private boolean isThere2OrHigherLowerCards(Card currentCard, List<Card> hand){
-		ArrayList<Card> checkingList = findSuitableListForAvailableCards(currentCard.getSuit());
-		int higherValues = 0;
-		
-		for(int i=0; i<checkingList.size(); i++){
-			if(!hand.contains(checkingList.get(i))){
-				if(checkingList.get(i).getValue() > currentCard.getValue()){
-					higherValues++;
-				}
-			}
-		}
-		return higherValues <= 2;
-	}
-	
-	//check specific card against available cardlist, no more then 2 lower then it it will return true or false 
+	// check specific card against available cardlist, no more then 2 lower then
+	// it it will return true or false
 
 	private ArrayList<Card> findSuitableList(char suit) {
 		if (suit == Card.HEARTS) {
@@ -145,8 +150,8 @@ public class CardTracker {
 		}
 		return null;
 	}
-	
-	private ArrayList<Card> findSuitableListForAvailableCards(char suit) {
+
+	public ArrayList<Card> findSuitableListForAvailableCards(char suit) {
 		if (suit == Card.HEARTS) {
 			return heartsAvailable;
 		} else if (suit == Card.SPADES) {
@@ -177,11 +182,27 @@ public class CardTracker {
 		leadSuits.put(Card.DIAMONDS, 0);
 	}
 
-	private void refreshAvailableCards(){
+	private void refreshAvailableCards() {
+		clubsAvailable.clear();
+		spadesAvailable.clear();
+		heartsAvailable.clear();
+		diamondsAvailable.clear();
 		clubsAvailable.addAll(Arrays.asList(ALL_CLUBS));
 		spadesAvailable.addAll(Arrays.asList(ALL_SPADES));
 		heartsAvailable.addAll(Arrays.asList(ALL_HEARTS));
 		diamondsAvailable.addAll(Arrays.asList(ALL_DIAMONDS));
+	}
+	
+	public int numberOfTimesSuitIsLead(char suit) {
+		if(suit == Card.CLUBS) {
+			return numberOfTimesClubsIsLead();
+		} else if(suit == Card.DIAMONDS) {
+			return numberOfTimesDiamondsIsLead();
+		} else if(suit == Card.HEARTS) {
+			return numberOfTimesHeartsIsLead();
+		} else {
+			return numberOfTimesSpadesIsLead();
+		}
 	}
 
 	public int numberOfTimesHeartsIsLead() {
@@ -199,24 +220,38 @@ public class CardTracker {
 	public int numberOfTimesSpadesIsLead() {
 		return leadSuits.get(Card.SPADES);
 	}
-	
-	public boolean isTheBestHeartInHandBeatable(Card bestHeartInHand, List<Card> hand){
+
+	public boolean isHeartSafeToLead(Card bestHeartInHand, List<Card> hand) {
 		List<Card> heartsAvailableThatArentInMyHand = new ArrayList<Card>();
 		int valueToBeat = bestHeartInHand.getValue();
-		
-		for(int i=0; i<heartsAvailable.size(); i++){
-			Card checkingHeartCard = heartsAvailable.get(i);
-			if(!hand.contains(checkingHeartCard)){
-				heartsAvailableThatArentInMyHand.add(checkingHeartCard);
+
+		for (int i = 0; i < heartsAvailable.size(); i++) {
+			Card heart = heartsAvailable.get(i);
+			if (!hand.contains(heart)) {
+				heartsAvailableThatArentInMyHand.add(heart);
 			}
 		}
-		
-		for(int i=0; i<heartsAvailableThatArentInMyHand.size(); i++){
-			if(heartsAvailableThatArentInMyHand.get(i).getValue() > valueToBeat)
-				return true;
+		if (heartsAvailableThatArentInMyHand.size() == 0) {
+			return false;
 		}
-		
-		return false;
+
+		int howManyTimesMyCardIsBeaten = 0;
+		for (int i = 0; i < heartsAvailableThatArentInMyHand.size(); i++) {
+			if (heartsAvailableThatArentInMyHand.get(i).getValue() < valueToBeat) {
+				howManyTimesMyCardIsBeaten++;
+			}
+
+		}
+
+		if (heartsAvailableThatArentInMyHand.size() > 2) {
+			return howManyTimesMyCardIsBeaten <= 2;
+		} else if (heartsAvailableThatArentInMyHand.size() == 2) {
+			return howManyTimesMyCardIsBeaten <= 1;
+		} else if (heartsAvailableThatArentInMyHand.size() == 1) {
+			return howManyTimesMyCardIsBeaten < 1;
+		} else {
+			return false;
+		}
 	}
 
 }

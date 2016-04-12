@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import ai.RandomAI;
+import ai.PlayRandomAI;
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
@@ -22,7 +22,7 @@ public class testPlayer {
 	
 	@Before
 	public void setUp() {
-		player = new Player(new RandomAI());
+		player = new Player(new PlayRandomAI());
 		hand = new ArrayList<Card>();
 		cardsPlayedTracker = new ArrayList<Card>();
 		leadPlayer = new MaxFourInt(0);

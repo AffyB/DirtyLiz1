@@ -1,13 +1,12 @@
 package ai;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
 
-public class Smart_HeartFeature extends SmartArtificialIntelligence {
+public class Smart_ShootTheMoonOnHeart extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
 	private PlaySafeModuleImprove safeModule;
@@ -15,14 +14,16 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 	private HeartsModule heartsModule;
 	private LeadModule leadModule;
 	private PlaySmartHighModule playSmartHigh;
+	private ShootingMoonModule shootTheMoon; 
 	
-	public Smart_HeartFeature(CardTracker cardTracker) {
+	public Smart_ShootTheMoonOnHeart(CardTracker cardTracker) {
 		super(cardTracker);
 		safeModule = new PlaySafeModuleImprove();
 		queenModule = new SpadesModule();
 		heartsModule = new HeartsModule();
 		leadModule = new LeadModule();
 		playSmartHigh = new PlaySmartHighModule();
+		shootTheMoon = new ShootingMoonModule();
 		
 	}
 
@@ -32,8 +33,13 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 		queenModule.addTracker(cardTracker);
 		heartsModule.addTracker(cardTracker);
 		playSmartHigh.addTracker(cardTracker);
+
 		
-		returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
+		returnCard = shootTheMoon.getMove(playedCards, hand, leadPlayer, players, currentPlayer);
+		
+		if(returnCard == null){
+			returnCard = queenModule.getMove(playedCards, hand, leadPlayer);
+		}
 		
 		if(returnCard == null){
 			returnCard = leadModule.getMove(playedCards, hand, leadPlayer);
@@ -67,7 +73,7 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 	}
 
 	public String toString(){
-		String ai = "Smart_HeartFeatureAI";
+		String ai = "Smart_ShootTheMoonFeatureAI";
 		return ai;	
 	}
 	

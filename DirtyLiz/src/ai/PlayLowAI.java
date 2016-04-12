@@ -10,7 +10,7 @@ public class PlayLowAI implements ArtificialIntelligence {
 	Player connectedPlayer; 
 	private PlaySuperSafeModule safe;
 	
-	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer){
+	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer){
 		safe = new PlaySuperSafeModule();
 		return safe.getMove(playedCards, hand, leadPlayer);	
 	}

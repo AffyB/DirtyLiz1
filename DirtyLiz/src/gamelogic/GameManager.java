@@ -8,9 +8,9 @@ import ai.PlayLowAI;
 import ai.Smart_BaseOfAllAI;
 import ai.Smart_HeartFeature;
 import ai.Smart_QueenFeature;
-import ai.Smart_ShootTheMoonFeature;
-import ai.Smart_VoidFeature;
-import ai.RandomAI;
+import ai.Smart_ShootTheMoonOnLow;
+import ai.Smart_ShootTheMoonOnHeart;
+import ai.PlayRandomAI;
 import commmon.Card;
 import commmon.Deck;
 import commmon.MaxFourInt;
@@ -46,22 +46,24 @@ public class GameManager {
 	}
 
 	private ArtificialIntelligence findAI(String s) {
-		String[] comboBoxArray = { "Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Smart Void AI"};
+		String[] comboBoxArray = { "Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Shoot The Moon With Heart AI", "Play Shoot The Moon On Low AI"};
 
 		if (s.equals(comboBoxArray[0])) {
 			return new PlayHighAI();
 		} else if (s.equals(comboBoxArray[1])) {
 			return new PlayLowAI();
 		} else if (s.equals(comboBoxArray[2])) {
-			return new RandomAI();
+			return new PlayRandomAI();
 		} else if (s.equals(comboBoxArray[3])) {
 			return new Smart_BaseOfAllAI(trackCards);
 		} else if(s.equals(comboBoxArray[4])) {
 			return new Smart_QueenFeature(trackCards);
 		} else if(s.equals(comboBoxArray[5])){
 			return new Smart_HeartFeature(trackCards);
+		} else if(s.equals(comboBoxArray[6])) {
+			return new Smart_ShootTheMoonOnHeart(trackCards); 
 		}
-		return new Smart_VoidFeature(trackCards); 
+		return new Smart_ShootTheMoonOnLow(trackCards);
 	}
 
 	public void start() {
@@ -137,15 +139,19 @@ public class GameManager {
 			playOnce();
 			playedCards = new Card[4];
 		}
-		System.out.println("PLAYER 1 SCORE: " + players[0].getScoreForCurrentHand());
-		System.out.println("PLAYER 2 SCORE: " + players[1].getScoreForCurrentHand());
-		System.out.println("PLAYER 3 SCORE: " + players[2].getScoreForCurrentHand());
-		System.out.println("PLAYER 4 SCORE: " + players[3].getScoreForCurrentHand());
-		System.out.println("END OF ROUND");
-		System.out.println("*************************************************");
-		System.out.println("*************************************************");
-		System.out.println("*************************************************");
-		System.out.println("*************************************************");
+		// System.out.println("PLAYER 1 SCORE: " +
+		// players[0].getScoreForCurrentHand());
+		// System.out.println("PLAYER 2 SCORE: " +
+		// players[1].getScoreForCurrentHand());
+		// System.out.println("PLAYER 3 SCORE: " +
+		// players[2].getScoreForCurrentHand());
+		// System.out.println("PLAYER 4 SCORE: " +
+		// players[3].getScoreForCurrentHand());
+		// System.out.println("END OF ROUND");
+		// System.out.println("*************************************************");
+		// System.out.println("*************************************************");
+		// System.out.println("*************************************************");
+		// System.out.println("*************************************************");
 
 		checkShootingTheMoon();
 		addPoints();
@@ -181,27 +187,31 @@ public class GameManager {
 	private void playOnce() {
 		MaxFourInt currentPlayer = leadPlayer;
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
-				leadPlayer);
+				leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], true);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		// System.out.println("Player " + currentPlayer.getValue() + "played " +
+		// playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
-				leadPlayer);
+				leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		// System.out.println("Player " + currentPlayer.getValue() + "played " +
+		// playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
-				leadPlayer);
+				leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		// System.out.println("Player " + currentPlayer.getValue() + "played " +
+		// playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players,
-				leadPlayer);
+				leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		// System.out.println("Player " + currentPlayer.getValue() + "played " +
+		// playedCards[currentPlayer.getValue()]);
 
 		Card losingCard = playedCards[leadPlayer.getValue()];
 		int losingPlayer = leadPlayer.getValue();
@@ -219,10 +229,11 @@ public class GameManager {
 				}
 			}
 		}
-		System.out.println("------------------------------------------");
-		System.out.println("The losing player is " + losingPlayer + "and they played " + losingCard);
-		System.out.println("------------------------------------------");
-		System.out.println("------------------------------------------");
+		// System.out.println("------------------------------------------");
+		// System.out.println("The losing player is " + losingPlayer + "and they
+		// played " + losingCard);
+		// System.out.println("------------------------------------------");
+		// System.out.println("------------------------------------------");
 
 		int totalScore = calculateScores(playedCards);
 
