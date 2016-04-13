@@ -46,6 +46,7 @@ public class GameManager {
 
 	}
 
+	//assign AI to player's retrieved from the GUI
 	private ArtificialIntelligence findAI(String s) {
 		String[] comboBoxArray = { "Play High AI", "Play Low AI", "Play Random AI", "Play My Smart AI", "Play Smart Queen AI", "Play Smart Heart AI", "Play Shoot The Moon With Heart AI", "Play Shoot The Moon On Low AI"};
 
@@ -110,7 +111,6 @@ public class GameManager {
 	}
 
 	private void findWinnerAndLoser() {
-		// TODO: CHECK FOR DRAWS
 		// KLUDGE: don't initialise positions as 0, could cause bugs (but
 		// shouldn't).
 		int losingPosition = 0;
@@ -140,15 +140,15 @@ public class GameManager {
 			playOnce();
 			playedCards = new Card[4];
 		}
-		 System.out.println("PLAYER 1 SCORE: " + players[0].getScoreForCurrentHand());
-		 System.out.println("PLAYER 2 SCORE: " + players[1].getScoreForCurrentHand());
-		 System.out.println("PLAYER 3 SCORE: " + players[2].getScoreForCurrentHand());
-		 System.out.println("PLAYER 4 SCORE: " + players[3].getScoreForCurrentHand());
-		 System.out.println("END OF ROUND");
-		 System.out.println("*************************************************");
-		 System.out.println("*************************************************");
-		 System.out.println("*************************************************");
-		 System.out.println("*************************************************");
+//		 System.out.println("PLAYER 1 SCORE: " + players[0].getScoreForCurrentHand());
+//		 System.out.println("PLAYER 2 SCORE: " + players[1].getScoreForCurrentHand());
+//		 System.out.println("PLAYER 3 SCORE: " + players[2].getScoreForCurrentHand());
+//		 System.out.println("PLAYER 4 SCORE: " + players[3].getScoreForCurrentHand());
+//		 System.out.println("END OF ROUND");
+//		 System.out.println("*************************************************");
+//		 System.out.println("*************************************************");
+//		 System.out.println("*************************************************");
+//		 System.out.println("*************************************************");
 
 		checkShootingTheMoon();
 		addPoints();
@@ -185,22 +185,22 @@ public class GameManager {
 		MaxFourInt currentPlayer = leadPlayer;
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players, leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], true);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players, leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players, leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 		currentPlayer = currentPlayer.next();
 
 		playedCards[currentPlayer.getValue()] = players[currentPlayer.getValue()].promptMove(playedCards, players, leadPlayer, currentPlayer);
 		trackCards.addToCards(playedCards[currentPlayer.getValue()], false);
-		System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
+		//System.out.println("Player " + currentPlayer.getValue() + "played " + playedCards[currentPlayer.getValue()]);
 
 		Card losingCard = playedCards[leadPlayer.getValue()];
 		int losingPlayer = leadPlayer.getValue();
@@ -218,10 +218,10 @@ public class GameManager {
 				}
 			}
 		}
-		 System.out.println("------------------------------------------");
-		 System.out.println("The losing player is " + losingPlayer + "and they played " + losingCard);
-		 System.out.println("------------------------------------------");
-		 System.out.println("------------------------------------------");
+//		 System.out.println("------------------------------------------");
+//		 System.out.println("The losing player is " + losingPlayer + "and they played " + losingCard);
+//		 System.out.println("------------------------------------------");
+//		 System.out.println("------------------------------------------");
 
 		int totalScore = calculateScores(playedCards);
 

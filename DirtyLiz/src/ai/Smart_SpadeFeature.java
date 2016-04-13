@@ -18,6 +18,7 @@ public class Smart_SpadeFeature extends SmartArtificialIntelligence {
 		queenModule = new SpadesModule();
 	}
 
+	//Calls spade module and play safe module 
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer) {
 		Card returnCard = null;
 		queenModule.addTracker(cardTracker);
@@ -27,7 +28,7 @@ public class Smart_SpadeFeature extends SmartArtificialIntelligence {
 		if(returnCard==null){
 			returnCard = safe.getMove(playedCards, hand, leadPlayer);
 		}
-		//System.out.println("FROM QUEEN MODULE " + returnCard);
+		//System.out.println("FROM SPADE MODULE " + returnCard);
 		return returnCard;
 	}
 	

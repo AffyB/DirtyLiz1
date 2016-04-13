@@ -52,6 +52,7 @@ public class PlaySuperSafeModule {
 		return lowestValueCard;
 	}
 
+	//returns lowest value heart card
 	public Card checkForHeart(List<Card> hand) {
 		Card findHeart = null;
 		int lowestValue = 15;

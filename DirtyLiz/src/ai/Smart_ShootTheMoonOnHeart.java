@@ -8,6 +8,8 @@ import gamelogic.Player;
 
 public class Smart_ShootTheMoonOnHeart extends SmartArtificialIntelligence {
 
+	/** Shoot the Moon module added to Hearts AI **/
+	
 	Player connectedPlayer;
 	private PlaySafeModuleRefactored safeModule;
 	private SpadesModule queenModule;

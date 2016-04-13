@@ -13,7 +13,6 @@ public class PlayHighModule {
 		if (playedCards[leadPlayer.getValue()] == null) {
 			cardToPlay = playHighestCard(hand);
 			return cardToPlay;
-
 		}
 
 		char suitPlayed = playedCards[leadPlayer.getValue()].getSuit();
@@ -36,6 +35,7 @@ public class PlayHighModule {
 
 	}
 
+	//returns highest same suit card in hand
 	public Card checkForSameSuit(char suit, List<Card> hand) {
 		int highestValue = 0;
 		Card highestValueCard = null;
@@ -53,6 +53,7 @@ public class PlayHighModule {
 		return highestValueCard;
 	}
 
+	//returns highest heart card in hand
 	public Card checkForHeart(List<Card> hand) {
 		Card findHeart = null;
 		int highestValue = 0;
@@ -70,6 +71,7 @@ public class PlayHighModule {
 		return findHeart;
 	}
 
+	//returns highest value card if void
 	public Card playHighestCard(List<Card> hand) {
 		int highestValue = 0;
 		Card highestValueCard = null;

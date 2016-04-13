@@ -16,6 +16,7 @@ public class History {
 		needsHeader = true;
 	}
 	
+	//creates singleton object for History to avoid overwriting content
 	public static History getHistory() {
 		if(history != null) {
 			return history;
@@ -24,6 +25,7 @@ public class History {
 		}
 	}
 	
+	//adds scores to the history biulder before writing 
 	public void addToHistory(Player[] players){
 		this.players = players;
 		if(needsHeader) {
@@ -40,6 +42,7 @@ public class History {
 		historyBuilder.append("\n");
 	}
 	
+	//if called first time, headers are added for readability 
 	private void addHeaders() {
 		historyBuilder.append("Player1,Player2,Player3,Player4\n");
 		historyBuilder.append(players[0].getAI().toString() + ",");
@@ -49,6 +52,7 @@ public class History {
 		historyBuilder.append("\n");
 	}
 	
+	//if called first time, footers are added to sum up statistics for the player 
 	private void addFooters() {
 		historyBuilder.append("\n");
 		historyBuilder.append("WINS\n");
@@ -79,6 +83,7 @@ public class History {
 		historyBuilder.append(players[3].getShootTheMoon());
 	}
 	
+	//if name of file is empty (retrieved from GUI), names the file the default name
 	public void nameTheFile(String fileName){
 		if(fileName.equals("")){
 			nameOfFile = "DirtyLiz Results Spreadsheet.csv";
@@ -89,8 +94,8 @@ public class History {
 		
 	}
 	
+	//writes all content to a csv file
 	public void writeToFile(){
-		
 		addFooters();
 		
 		FileWriter fileWriter = null; 

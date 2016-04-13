@@ -14,10 +14,12 @@ public class Deck {
 		shuffle();
 	}
 	
+	//returns a full deck of shuffled cards to be dealt out to each player
 	public ArrayList<Card> getCards(){
 		return shuffled;
 	}
 
+	//shuffles the deck
 	public void shuffle() {
 		notShuffled = Card.getDeck();
 		shuffled.clear();
@@ -67,6 +69,7 @@ public class Deck {
 		
 	}
 
+	//deck is also singleton to make sure same deck is called each time
 	public static Deck getDeck() {
 		if (deckObject == null) {
 			deckObject = new Deck();

@@ -9,6 +9,7 @@ public class LeadModule implements Module {
 
 	private CardTracker tracker;
 
+	//access to tracker
 	public void addTracker(CardTracker tracker) {
 		this.tracker = tracker;
 	}
@@ -30,8 +31,6 @@ public class LeadModule implements Module {
 
 		if (returnCard == null) {
 			// System.out.println("REACHES HERE HIGHDIAMONDORCLUB IN LEAD");
-			// TODO: Make sure you play not the highest available card so AIs
-			// will leave their high cards.
 			returnCard = getHighClubOrDiamond(hand);
 		}
 
@@ -53,6 +52,7 @@ public class LeadModule implements Module {
 		return returnCard;
 	}
 
+	//returns suitable high spade lead
 	public Card getNonRiskyLeadSpade(List<Card> hand) {
 		Card returnCard = null;
 		int spadeValue = 0;
@@ -73,6 +73,8 @@ public class LeadModule implements Module {
 		return returnCard;
 	}
 
+	// Make sure you play not the highest available card so AIs
+	// will leave their high cards.
 	public Card getHighClubOrDiamond(List<Card> hand) {
 		int diamondsLead = tracker.numberOfTimesDiamondsIsLead();
 		int clubsLead = tracker.numberOfTimesClubsIsLead();

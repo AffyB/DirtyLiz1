@@ -1,9 +1,10 @@
 package ai;
 
 import java.util.List;
-
 import commmon.Card;
 import commmon.MaxFourInt;
+
+/** Same as Play Safe Module with all logic regarding Hearts and Spades removed **/
 
 public class PlaySafeModuleRefactored implements Module{
 

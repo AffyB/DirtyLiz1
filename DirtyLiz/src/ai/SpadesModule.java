@@ -15,33 +15,38 @@ public class SpadesModule implements Module {
 	public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer) {
 		Card returnCard = null;
 
+		//if lead player and have the queen, play a card to void suit
 		if (playedCards[leadPlayer.getValue()] == null && hand.contains(Card.QUEEN_SPADES)) {
 				returnCard = getCardThatCanBeVoided(hand);
 				// System.out.println("LEAD CARD RETURNED BY QUEEN MODULE HAVE
 				// QUEEN AND RETURN VOIDED CARD " + returnCard);
-				// return returnCard;
-
+				
+			//if lead player and have the queen return a non loosable card
 			if (returnCard == null) {
 					returnCard = tracker.getHighestNonLosableCard(hand, true);
 					// System.out.println("LEAD CARD RETURNED BY QUEEN MODULE
 					// HAVE QUEEN AND RETURN NONELOSABLECARD " + returnCard);
-					// return returnCard;
 			}
 
+			//if lead player with the queen, return lowest cards if all else fails
 			if (returnCard == null) {
 					returnCard = getLowestCard(hand);
 //					 System.out.println("LEAD CARD RETURNED BY QUEEN MODULE
 //					 HVE QUEEN AND RETURN LOWEST CARD " + returnCard);
 //					 return returnCard;
 			}
+		//if not leading player
 		} else if (playedCards[leadPlayer.getValue()] != null && playedCards[leadPlayer.getValue()].getSuit() == Card.SPADES) {
 
+			//if playing last - return highest spade card
 			returnCard = getHighestSpadeIfPlayingLast(playedCards, hand);
 
+			//if hand has queen, then return highest spade to try and obtain lead
 			if (returnCard == null && hand.contains(Card.QUEEN_SPADES)) {
 				returnCard = getHighestSpade(hand);
 			}
 
+			//if hand doesn't have queen still return suitable high card
 			if (returnCard == null && !hand.contains(Card.QUEEN_SPADES)) {
 				returnCard = getHighestSpadeWithoutQueenInHand(playedCards, hand, leadPlayer);
 			}
@@ -120,14 +125,12 @@ public class SpadesModule implements Module {
 			}
 		}
 
-		// if Ace of King of Spades has been played, play the queen if you have
-		// it
+		// if Ace of King of Spades has been played, play the queen if you have it
 		if (isAceorKingPlayed) {
 			return checkForQueenAndReturn(hand);
 		}
 
-		// if less then 3 points are up for taking then play Ace/King/Highest
-		// card to get rid of a danger card
+		// if less then 3 points are up for taking then play Ace/King/Highest card to get rid of a danger card
 		if (numOfPlayersPlayed == 3 && points < 3) {
 			if (hand.contains(Card.ACE_SPADES)) {
 				return Card.ACE_SPADES;
@@ -164,6 +167,7 @@ public class SpadesModule implements Module {
 		return returningCard;
 	}
 
+	//determines if there is enough spades to cover the queen in your hand
 	public boolean isThereEnoughCoverForQueen(List<Card> hand) {
 		int numOfSpadeCards = tracker.numberOfTimesSpadesIsLead();
 
@@ -176,6 +180,7 @@ public class SpadesModule implements Module {
 		return numOfSpadeCards >= 3;
 	}
 
+	//attempt to void to play the queen later on
 	private Card getCardThatCanBeVoided(List<Card> hand) {
 		Card returnCard = null;
 		int numOfClubs = 0;

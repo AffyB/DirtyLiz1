@@ -46,15 +46,16 @@ public class PlaySafeModule implements Module{
 
 	}
 
+	//returns suitable low card following suit
 	public Card checkForSameSuitToPlay(char suit, List<Card> hand, Card[] playedCards, MaxFourInt leadPlayer) {
 		Card returnCard = null;
 		int valueToBeat = playedCards[leadPlayer.getValue()].getValue();
-//		for (int i = 0; i < playedCards.length; i++) {
-//			//Check if anyone has played a higher card than the lead.
-//			if (playedCards[i] != null && playedCards[i].getSuit() == suit && playedCards[i].getValue() > valueToBeat) {
-//				valueToBeat = playedCards[i].getValue();
-//			}
-//		}
+		for (int i = 0; i < playedCards.length; i++) {
+			//Check if anyone has played a higher card than the lead.
+			if (playedCards[i] != null && playedCards[i].getSuit() == suit && playedCards[i].getValue() > valueToBeat) {
+				valueToBeat = playedCards[i].getValue();
+			}
+		}
 
 		for (int i = 0; i < hand.size(); i++) {
 			Card card = hand.get(i);
@@ -75,6 +76,7 @@ public class PlaySafeModule implements Module{
 		return returnCard;
 	}
 	
+	//plays lowest card of same suit 
 	public Card playLowestSameSuitCard(char suit, List<Card> hand){
 		Card returnCard = null;
 		int valueToBeat=15;
@@ -88,13 +90,11 @@ public class PlaySafeModule implements Module{
 					returnCard = card;
 				}
 			}
-		}
-				
-				
+		}	
 		return returnCard;
-		
 	}
 
+	//returns highest heart
 	public Card checkForHeart(List<Card> hand) {
 		Card findHeart = null;
 		int highestValue = 0;
@@ -112,6 +112,7 @@ public class PlaySafeModule implements Module{
 		return findHeart;
 	}
 
+	//returns lowest card
 	public Card playLowestCard(List<Card> hand) {
 		int lowestValue = 15;
 		Card lowestValueCard = null;

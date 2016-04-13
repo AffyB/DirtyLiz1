@@ -29,7 +29,7 @@ public class CardTest {
 		assertEquals(4, findValueTotal(3, Card.getDeck()));
 		assertEquals(4, findValueTotal(13, Card.getDeck()));
 		assertEquals(13, Card.KING_CLUBS.getValue());
-		assertEquals(1, Card.ACE_SPADES.getValue());
+		assertEquals(14, Card.ACE_SPADES.getValue());
 	}
 
 	@Test

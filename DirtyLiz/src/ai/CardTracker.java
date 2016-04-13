@@ -33,7 +33,7 @@ public class CardTracker {
 	public static final Card[] ALL_DIAMONDS = new Card[] { Card.ACE_DIAMONDS, Card.TWO_DIAMONDS, Card.THREE_DIAMONDS,
 			Card.FOUR_DIAMONDS, Card.FIVE_DIAMONDS, Card.SIX_DIAMONDS, Card.SEVEN_DIAMONDS, Card.EIGHT_DIAMONDS,
 			Card.NINE_DIAMONDS, Card.TEN_DIAMONDS, Card.JACK_DIAMONDS, Card.QUEEN_DIAMONDS, Card.KING_DIAMONDS };
-
+ 
 	private CardTracker() {
 		THE_CARD_TRACKER = this;
 		leadSuits = new HashMap<Character, Integer>();
@@ -57,6 +57,7 @@ public class CardTracker {
 		
 	}
 
+	//cardTracker is a singleton to avoid overriding contents when adding to it
 	public static CardTracker getTracker() {
 		if (THE_CARD_TRACKER == null) {
 			return new CardTracker();
@@ -65,6 +66,7 @@ public class CardTracker {
 		}
 	}
 
+	//add played card to the trackere
 	public void addToCards(Card cardPlayed, boolean wasLead) {
 		trackedCards.add(cardPlayed);
 		if (wasLead) {
@@ -78,11 +80,14 @@ public class CardTracker {
 		findSuitableList(cardPlayed.getSuit()).add(cardPlayed);
 	}
 
+	//removes played card from list of available cards
+	//keeps track of what cards are still left to be played
 	public void removeCardFromAvailableCards(Card cardPlayed) {
 		char suit = cardPlayed.getSuit();
 		findSuitableListForAvailableCards(suit).remove(cardPlayed);
 	}
 
+	//based on all info, returns highest card in players hand which is gauranteed to beaten by another card in another player's hand
 	public Card getHighestNonLosableCard(List<Card> hand, boolean isQueenPresentInHand) {
 		int highestValueSoFar = 0;
 		Card returnCard = null;
@@ -102,6 +107,9 @@ public class CardTracker {
 		return returnCard;
 	}
 
+	//checks to see if there are lower cards still left to play
+	// check specific card against available card list, no more then 2 lower then
+	// it it will return true or false
 	private boolean isThereTwoOrFewerLowerCards(Card cardToCheck, List<Card> hand) {
 		ArrayList<Card> suitableList = findSuitableListForAvailableCards(cardToCheck.getSuit());
 		ArrayList<Card> checkingList = new ArrayList<Card>();
@@ -135,9 +143,8 @@ public class CardTracker {
 		}
 	}
 
-	// check specific card against available cardlist, no more then 2 lower then
-	// it it will return true or false
-
+	
+	//matches suit to its corresponding array of played cards
 	private ArrayList<Card> findSuitableList(char suit) {
 		if (suit == Card.HEARTS) {
 			return heartsPlayed;
@@ -151,6 +158,7 @@ public class CardTracker {
 		return null;
 	}
 
+	//matches suit to its corresponding array of available cards
 	public ArrayList<Card> findSuitableListForAvailableCards(char suit) {
 		if (suit == Card.HEARTS) {
 			return heartsAvailable;
@@ -168,6 +176,7 @@ public class CardTracker {
 		return trackedCards;
 	}
 
+	//resets everything
 	public void newGame() {
 		trackedCards.clear();
 		heartsPlayed.clear();
@@ -193,6 +202,7 @@ public class CardTracker {
 		diamondsAvailable.addAll(Arrays.asList(ALL_DIAMONDS));
 	}
 	
+	//tracks the number of times a suit has been lead
 	public int numberOfTimesSuitIsLead(char suit) {
 		if(suit == Card.CLUBS) {
 			return numberOfTimesClubsIsLead();
@@ -221,6 +231,8 @@ public class CardTracker {
 		return leadSuits.get(Card.SPADES);
 	}
 
+	//based on all information returns true or false if a heart is safe to lead 
+	//the heart will be gauranteed to be beaten by another player
 	public boolean isHeartSafeToLead(Card bestHeartInHand, List<Card> hand) {
 		List<Card> heartsAvailableThatArentInMyHand = new ArrayList<Card>();
 		int valueToBeat = bestHeartInHand.getValue();

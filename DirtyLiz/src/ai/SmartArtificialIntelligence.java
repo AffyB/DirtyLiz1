@@ -1,7 +1,8 @@
 package ai;
 
-public abstract class SmartArtificialIntelligence 
-	implements ArtificialIntelligence {
+public abstract class SmartArtificialIntelligence implements ArtificialIntelligence {
+
+	/** abstract class implenting interface specifically for smart AIs to gain access to tracker **/
 
 	protected CardTracker cardTracker;
 

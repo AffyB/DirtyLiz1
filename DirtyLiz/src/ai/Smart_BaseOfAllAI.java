@@ -15,6 +15,7 @@ public class Smart_BaseOfAllAI extends SmartArtificialIntelligence{
 		safe = new PlaySafeModule();
 	}
 	
+	//calls play safe module
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer){
 		return safe.getMove(playedCards, hand, leadPlayer);	
 	}

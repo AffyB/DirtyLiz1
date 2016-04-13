@@ -26,6 +26,7 @@ public class Smart_HeartFeature extends SmartArtificialIntelligence {
 		
 	}
 
+	//calls many modules to return best card
 	public Card getMove(Card[] playedCards, List<Card> hand, Player[] players, MaxFourInt leadPlayer, MaxFourInt currentPlayer) {
 		Card returnCard = null;
 		leadModule.addTracker(cardTracker);

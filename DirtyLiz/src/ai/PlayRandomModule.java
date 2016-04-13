@@ -12,7 +12,6 @@ public Card getMove(Card[] playedCards, List<Card> hand, MaxFourInt leadPlayer){
 		if(playedCards[leadPlayer.getValue()] == null){
 			cardToPlay = playRandomCard(hand);
 			return cardToPlay;
-			
 		}
 		
 		char suitPlayed = playedCards[leadPlayer.getValue()].getSuit();

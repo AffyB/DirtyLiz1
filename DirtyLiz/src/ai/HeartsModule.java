@@ -9,6 +9,7 @@ public class HeartsModule implements Module{
 	
 	private CardTracker tracker;
 	
+	//access to tracker 
 	public void addTracker(CardTracker tracker) {
 		this.tracker = tracker;
 	}

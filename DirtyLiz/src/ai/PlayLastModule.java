@@ -10,6 +10,7 @@ public class PlayLastModule implements Module {
 	
 	private CardTracker tracker;
 	
+	//access to tracker
 	public void addTracker(CardTracker tracker) {
 		this.tracker = tracker;
 	}
@@ -26,7 +27,7 @@ public class PlayLastModule implements Module {
 			}
 		}
 		
-		//TODO Test points values
+		//check to make sure last player and no penalty points
 		if(numOfPlayersPlayed == 3 && points == 0){
 			returnCard = getHighestCardThatFollowsSuit(hand, playedCards[leadPlayer.getValue()].getSuit());
 		}
@@ -56,6 +57,7 @@ public class PlayLastModule implements Module {
 		return returnCard;
 	}
 	
+	//if void returns high value club or diamond (logic for hearts and spade covered in their own modules)
 	private Card getHighClubOrDiamond(List<Card> hand, char suit) {
 		if(suit == Card.SPADES || suit == Card.HEARTS) {
 			return null;

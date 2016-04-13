@@ -11,7 +11,7 @@ import ai.PlayRandomAI;
 import gamelogic.History;
 import gamelogic.Player;
 
-public class testHistory {
+public class HistoryTest {
 
 	private Player[] players = new Player[4]; 
 	private History history = History.getHistory();   
@@ -30,12 +30,14 @@ public class testHistory {
 	
 	@Test
 	public void test() {
+		history.nameTheFile("TEST1.csv");
 		history.addToHistory(players);
 		history.writeToFile();
 		players[0].addToScore(79);
 		players[1].addToScore(84);
 		players[2].addToScore(90);
 		players[3].addToScore(100);
+		history.nameTheFile("TEST2.csv");
 		history.addToHistory(players);
 		history.writeToFile();
 

@@ -7,6 +7,8 @@ import gamelogic.Player;
 
 public class Smart_ShootTheMoonOnLow extends SmartArtificialIntelligence{
 
+	/** Shoot the Moon module added to Low AI **/
+
 	Player connectedPlayer; 
 	private PlaySuperSafeModule safe;
 	private ShootingMoonModule shootTheMoon;

@@ -13,7 +13,7 @@ import commmon.Card;
 import commmon.MaxFourInt;
 import gamelogic.Player;
 
-public class QueenOfSpadesModuleTest {
+public class SpadesModuleTest {
 	
 	Card[] cardsPlayed;
 	private List<Card> hand;
@@ -95,36 +95,5 @@ public class QueenOfSpadesModuleTest {
 		assertEquals(Card.TEN_SPADES, queen.getMove(cardsPlayed, hand, leadPlayer));
 
 	}
-	
-//	@Test
-//	public void testHighestHeart() {
-//		hand.add(Card.TEN_HEARTS);
-//		hand.add(Card.FIVE_HEARTS);
-//		hand.add(Card.SIX_DIAMONDS);
-//		hand.add(Card.EIGHT_DIAMONDS);
-//		hand.add(Card.TWO_HEARTS);
-//		hand.add(Card.NINE_SPADES);
-//		hand.add(Card.ACE_HEARTS);
-//		
-//		cardsPlayed[0] = Card.JACK_HEARTS;
-//		
-//		assertEquals(Card.ACE_HEARTS, heart.findHighestHeart(hand));
-//	}
-//	
-//	@Test
-//	public void testLowesttHeart() {
-//		hand.add(Card.TEN_HEARTS);
-//		hand.add(Card.FIVE_HEARTS);
-//		hand.add(Card.SIX_DIAMONDS);
-//		hand.add(Card.EIGHT_DIAMONDS);
-//		hand.add(Card.TWO_HEARTS);
-//		hand.add(Card.NINE_SPADES);
-//		hand.add(Card.ACE_HEARTS);
-//		
-//		cardsPlayed[0] = Card.JACK_HEARTS;
-//		
-//		assertEquals(Card.TWO_HEARTS, heart.findLowestHeart(hand));
-//	}
-
 	
 }

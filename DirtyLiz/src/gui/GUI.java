@@ -88,6 +88,7 @@ public class GUI {
 		lblAiForPlayer_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAiForPlayer_3.setFont(new Font("Agency FB", Font.PLAIN, 21));
 		
+		//add AIs to the combobox to be selected
 		JComboBox comboBox = new JComboBox(comboBoxArray);
 		
 		JComboBox comboBox2 = new JComboBox(comboBoxArray);
