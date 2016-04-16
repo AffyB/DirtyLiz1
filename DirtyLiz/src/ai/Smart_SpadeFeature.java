@@ -9,12 +9,12 @@ import gamelogic.Player;
 public class Smart_SpadeFeature extends SmartArtificialIntelligence {
 
 	Player connectedPlayer;
-	private PlaySafeModule safe;
+	private PlaySafeModule2 safe;
 	private SpadesModule queenModule;
 	
 	public Smart_SpadeFeature(CardTracker cardTracker) {
 		super(cardTracker);
-		safe = new PlaySafeModule();
+		safe = new PlaySafeModule2();
 		queenModule = new SpadesModule();
 	}
 

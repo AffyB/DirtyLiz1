@@ -87,7 +87,7 @@ public class CardTracker {
 		findSuitableListForAvailableCards(suit).remove(cardPlayed);
 	}
 
-	//based on all info, returns highest card in players hand which is gauranteed to beaten by another card in another player's hand
+	//based on all info, returns highest card in players hand which is guaranteed to beaten by another card in another player's hand
 	public Card getHighestNonLosableCard(List<Card> hand, boolean isQueenPresentInHand) {
 		int highestValueSoFar = 0;
 		Card returnCard = null;
